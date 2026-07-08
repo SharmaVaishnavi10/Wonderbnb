@@ -20,38 +20,38 @@ async function main() {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/" ,(req,res) => {
     res.send("Hlo i am root")
 });
 
-app.get("/testListing", async (req, res) => {
-    let sampleListing = new Listing({
-        title: "My New Villa",
-        description: "A beautiful villa with stunning views.",
-        price: 1200,
-        location: "Calangute, Goa",
-        country: "India",
-    })
 
-    await sampleListing.save();
-    res.send("Sample listing created!");
-    console.log("Sample listing created and saved to the database.");
-
-});
-
-//Index route to display all listings
+//Index Route 
 app.get("/listings", async (req,res) => {
     const allListings = await Listing.find({});
    res.render("listings/index.ejs", { allListings });
 });
 
-//Show route to display a specific listing
-app.get("/listings/:id", async (req,res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id);
-    res.render("listings/show.ejs", { listing });
-})
+//New Route
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new.ejs");
+});
+
+//Show Route
+app.get("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("listings/show.ejs", { listing });
+});
+
+//Create Route
+app.post("/listings", async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
+  res.redirect("/listings");
+});
+
 app.listen(8080,() => {
     console.log("connected to server");
 });
