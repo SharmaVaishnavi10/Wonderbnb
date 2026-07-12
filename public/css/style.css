@@ -1,8 +1,5 @@
-* {
-     font-family: "Plus Jakarta Sans", sans-serif !important;
-     /* font-optical-sizing: auto;
-     font-weight: weight;
-     font-style: normal; */
+body {
+     font-family: "Plus Jakarta Sans", sans-serif !important;;
 }
 
 /* Navbar */
@@ -73,4 +70,20 @@
 
 .card-text p {
     font-weight: 400;
+}
+
+.listing-link {
+    text-decoration: none;
+}
+
+/*Card Effect*/
+
+.card-img-overlay {
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
 }
